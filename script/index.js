@@ -3,6 +3,12 @@ const createElemets = arr => {
     return htmlElement.join(" ")
 }
 
+function pronounceWord(word) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-EN"; // English
+    window.speechSynthesis.speak(utterance);
+}
+
 const managespinner = status => {
     if (status == true) {
         document.getElementById("spinner")
@@ -85,7 +91,7 @@ const displayLevelWord = words => {
         `;
         managespinner(false);
         return;
-        
+
     }
 
     words.forEach(word => {
@@ -97,7 +103,7 @@ const displayLevelWord = words => {
             <div class="text-2xl font-medium font-bangla">"${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"} / ${word.pronunciation ? word.pronunciation : "অনুবাদ পাওয়া যায়নি"}"</div>
             <div class="flex justify-between items-center">
                 <button onclick="loadWordDetail(${word.id})" class="btn bg-sky-50 rounded-md hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
-                <button class="btn bg-sky-50 rounded-md hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
+                <button onclick="pronounceWord('${word.word}')" class="btn bg-sky-50 rounded-md hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>
         `
@@ -128,3 +134,20 @@ const displayLessons = lessons => {
     }
 }
 loadLessons()
+
+document.getElementById("btn-search").addEventListener("click", () => {
+    removeActive()
+    const input = document.getElementById("input-search");
+    const searchValue = input.value.trim().toLowerCase();
+    console.log(searchValue)
+
+    fetch("https://openapi.programming-hero.com/api/words/all")
+        .then(res => res.json())
+        .then(data => {
+            const allWord = data.data;
+            console.log(allWord)
+            const filterWords = allWord.filter(word => word.word.toLowerCase().includes(searchValue))
+            console.log(filterWords)
+            displayLevelWord(filterWords)
+        })
+})

@@ -108,10 +108,22 @@
         <div id="level-container" class="flex gap-4 flex-wrap justify-center"></div>
     </section>
 
+    <!-- search vocabulary -->
+    <section class="flex justify-center my-10">
+        <div class="join">
+            <div>
+                <label class="input validator join-item">
+                    <input id="input-search" type="text" placeholder="Search Vocabulary Now" required />
+                </label>
+            </div>
+            <button id="btn-search" class="btn btn-primary join-item">Search</button>
+        </div>
+    </section>
+
     <!-- loading spinner -->
-     <section id="spinner" class="flex justify-center items-center mt-8 hidden">
+    <section id="spinner" class="flex justify-center items-center mt-8 hidden">
         <span class="loading loading-spinner loading-xl"></span>
-     </section>
+    </section>
 
     <!-- word container -->
     <section id="word-container"
@@ -127,7 +139,7 @@
     <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
             <div id="details-container" class="space-y-5">
-                
+
             </div>
             <div class="modal-action">
                 <form method="dialog">
